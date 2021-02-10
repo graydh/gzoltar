@@ -47,10 +47,13 @@ public class JUnitTestTask extends TestTask {
     // the old/original classloader when it finishes.
     Thread.currentThread().setContextClassLoader(classLoader);
 
-    Class<?> clazz = this.initTestClass ? Class.forName(this.testMethod.getTestClassName())
-        : Class.forName(this.testMethod.getTestClassName(), false, classLoader);
+    JUnitTestClassMethodReader IO = new JUnitTestClassMethodReader(); //reads name of current test case to run and class
+    IO.writeClassMethod(this.testMethod.getTestClassName(), this.testMethod.getTestMethodName()); //writes class and method name to file
+    
+    Class<?> clazz = this.initTestClass ? Class.forName("com.gzoltar.core.test.junit.JUnitWrapped")
+        : Class.forName("com.gzoltar.core.test.junit.JUnitWrapped", false, classLoader); //points junit runner to wrapped junit test
 
-    Request request = Request.method(clazz, this.testMethod.getTestMethodName());
+    Request request = Request.method(clazz, "runTest"); //runs wrapped junit test -> which then runs test of name/class written to IO var
     JUnitCore runner = new JUnitCore();
     runner.addListener(new JUnitTextListener());
     if (this.collectCoverage) {
