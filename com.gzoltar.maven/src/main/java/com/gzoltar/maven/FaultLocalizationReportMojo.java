@@ -45,8 +45,8 @@ public final class FaultLocalizationReportMojo extends AbstractReportMojo {
       ClasspathUtils.setClassLoaderClasspath(testClasspathURLs);
 
       // build a fault localization report
-      FaultLocalizationReportBuilder.build(this.getProject().getBuild().getOutputDirectory(),
-          this.createAgentConfigurations(), this.outputDirectory, this.dataFile, this.flFamilies);
+      FaultLocalizationReportBuilder.build(this.getProject().getBuild().getTestOutputDirectory(),
+          this.createAgentConfigurations(), this.outputDirectory, this.dataFile, this.flFamilies); //changed to getTestOuputDirectory
 
     } catch (Exception e) {
       throw new MavenReportException(e.toString(), e);

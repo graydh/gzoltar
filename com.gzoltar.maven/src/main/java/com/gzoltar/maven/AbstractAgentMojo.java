@@ -103,7 +103,7 @@ public abstract class AbstractAgentMojo extends AbstractGZoltarMojo {
   protected AgentConfigs createAgentConfigurations() {
     final AgentConfigs agentConfigs = new AgentConfigs();
 
-    String targetClassesDirectory = this.getProject().getBuild().getOutputDirectory();
+    String targetClassesDirectory = this.getProject().getBuild().getTestOutputDirectory(); //changed to test
     agentConfigs.setBuildLocation(targetClassesDirectory);
     if (this.getDestFile() != null) {
       agentConfigs.setDestfile(this.getDestFile().getAbsolutePath());
