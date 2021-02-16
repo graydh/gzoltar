@@ -130,7 +130,7 @@ public final class AgentConfigs {
    */
   public static final String INCLPUBLICMETHODS_KEY = "inclpublicmethods";
 
-  public static final boolean DEFAULT_INCLPUBLICMETHODS = true;
+  public static final boolean DEFAULT_INCLPUBLICMETHODS = false;
 
   /**
    * Specifies whether public static constructors of each class under test should be instrumented.
@@ -138,7 +138,7 @@ public final class AgentConfigs {
    */
   public static final String INCLSTATICCONSTRUCTORS_KEY = "inclstaticconstructors";
 
-  public static final boolean DEFAULT_INCLSTATICCONSTRUCTORS = true;
+  public static final boolean DEFAULT_INCLSTATICCONSTRUCTORS = false;
 
   /**
    * Specifies whether methods annotated with @deprecated of each class under test should be
