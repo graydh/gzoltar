@@ -53,6 +53,10 @@ public class RunTestMethods extends Command {
   @Option(name = "--initTestClass", usage = "initialize test class with thread classloader",
       metaVar = "<boolean>", required = false)
   private Boolean initTestClass = false;
+  
+  @Option(name = "--testExecutionCount", usage = "int of times to execute each test case (defaults to 1)",
+	  required = false)
+  private int testExecutionCount = 1;
 
   @Override
   public String description() {
@@ -83,30 +87,31 @@ public class RunTestMethods extends Command {
     try (BufferedReader br = new BufferedReader(new FileReader(this.testMethods))) {
       String line;
       while ((line = br.readLine()) != null) {
-        String[] split = line.split(",");
-
-        TestMethod testMethod = new TestMethod(ClassType.valueOf(split[0]), split[1]);
-        TestTask testTask = null;
-
-        switch (testMethod.getClassType()) {
-          case JUNIT:
-            testTask = new JUnitTestTask(classpathURLs, this.offline, this.collectCoverage,
-                this.initTestClass, testMethod);
-            break;
-          case TESTNG:
-            testTask = new TestNGTestTask(classpathURLs, this.offline, this.collectCoverage,
-                this.initTestClass, testMethod);
-            break;
-          default:
-            throw new RuntimeException(testMethod.getLongName() + " is not supported");
+        String[] split = line.split(","); 
+        for(int i = 0; i < this.testExecutionCount; i++) {
+	      TestMethod testMethod = new TestMethod(ClassType.valueOf(split[0]), split[1]);
+	      TestTask testTask = null;
+	
+	      switch (testMethod.getClassType()) {
+	        case JUNIT:
+	          testTask = new JUnitTestTask(classpathURLs, this.offline, this.collectCoverage,
+	              this.initTestClass, testMethod);
+	          break;
+	        case TESTNG:
+	          testTask = new TestNGTestTask(classpathURLs, this.offline, this.collectCoverage,
+	              this.initTestClass, testMethod);
+	          break;
+	        default:
+	          throw new RuntimeException(testMethod.getLongName() + " is not supported");
+	      }
+	      assert testTask != null;
+	
+	      TestRunner.run(testTask);
+	      testTask = null;
+	
+	      // restore system properties
+	      System.setProperties((Properties) backupProperties.clone());
         }
-        assert testTask != null;
-
-        TestRunner.run(testTask);
-        testTask = null;
-
-        // restore system properties
-        System.setProperties((Properties) backupProperties.clone());
       }
     }
 
