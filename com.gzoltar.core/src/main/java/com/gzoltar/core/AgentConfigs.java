@@ -130,11 +130,11 @@ public final class AgentConfigs {
    */
   public static final String INCLPUBLICMETHODS_KEY = "inclpublicmethods";
 
-  public static final boolean DEFAULT_INCLPUBLICMETHODS = false;
+  public static final boolean DEFAULT_INCLPUBLICMETHODS = true;
 
   /**
    * Specifies whether public static constructors of each class under test should be instrumented.
-   * Default is <code>true</code>.
+   * Default is <code>false</code>.
    */
   public static final String INCLSTATICCONSTRUCTORS_KEY = "inclstaticconstructors";
 
