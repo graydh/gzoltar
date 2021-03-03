@@ -21,10 +21,12 @@ import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 import com.gzoltar.core.listeners.Listener;
 import com.gzoltar.core.test.TestListener;
+import com.gzoltar.core.test.junit.JUnitTestClassMethodReader;
 
 public class JUnitTextListener extends TestListener {
 
   private boolean hasFailed = false;
+  private JUnitTestClassMethodReader IO = new JUnitTestClassMethodReader();
 
   /**
    * {@inheritDoc}
@@ -55,8 +57,9 @@ public class JUnitTextListener extends TestListener {
    */
   @Override
   public void testFinished(final Description description) {
+	String[] nameMethod = this.IO.readClassMethod();
     System.out
-        .println(this.getName(description) + " has finished! Has it failed? " + this.hasFailed);
+        .println(nameMethod[0] + "."+ nameMethod[1] + " " + (this.hasFailed ? "FAIL" : "PASS"));
   }
 
   /**
@@ -65,7 +68,7 @@ public class JUnitTextListener extends TestListener {
   @Override
   public void testFailure(final Failure failure) {
     this.hasFailed = true;
-    System.out.println(traceToString(failure.getException()));
+    //System.out.println(traceToString(failure.getException())); commented out since trace will come from wrapped JUnit test, same each execution
   }
 
   /**
