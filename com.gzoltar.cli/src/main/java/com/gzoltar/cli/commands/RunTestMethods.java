@@ -54,9 +54,8 @@ public class RunTestMethods extends Command {
       metaVar = "<boolean>", required = false)
   private Boolean initTestClass = false;
   
-  @Option(name = "--testExecutionCount", usage = "int of times to execute each test case (defaults to 1)",
-	  required = false)
-  private int testExecutionCount = 1;
+  // number of times to run each unit test in isolation
+  private int testExecutionCount = 500;
 
   @Override
   public String description() {

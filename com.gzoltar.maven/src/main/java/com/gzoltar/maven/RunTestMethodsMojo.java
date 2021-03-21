@@ -49,9 +49,6 @@ public class RunTestMethodsMojo extends AgentMojo {
 
   @Parameter(property = "gzoltar.collectCoverage", defaultValue = "true")
   private boolean collectCoverage;
-  
-  @Parameter(property = "gzoltar.testExecutionCount", defaultValue = "1")
-  private int testExecutionCount;
 
   /**
    * {@inheritDoc}
@@ -87,10 +84,6 @@ public class RunTestMethodsMojo extends AgentMojo {
       }
       if (this.collectCoverage) {
         commandLineArgs.add("--collectCoverage");
-      }
-      if (this.testExecutionCount != 1) {
-    	commandLineArgs.add("--testExecutionCount");
-        commandLineArgs.add(Integer.toString(this.testExecutionCount));
       }
 
       if (Launcher.launch(commandLineArgs) != 0) {
