@@ -55,7 +55,7 @@ public class RunTestMethods extends Command {
   private Boolean initTestClass = false;
   
   // number of times to run each unit test in isolation
-  private int testExecutionCount = 500;
+  private int testExecutionCount = 5000;
 
   @Override
   public String description() {
